@@ -4,9 +4,10 @@ import com.example.proyectoSura.entidades.Afiliado;
 import com.example.proyectoSura.repositorios.AfiliadoRepositorio;
 import com.example.proyectoSura.utilidades.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class AfiliadoServicio {
     @Autowired
     private AfiliadoRepositorio afiliadoRepositorio;
