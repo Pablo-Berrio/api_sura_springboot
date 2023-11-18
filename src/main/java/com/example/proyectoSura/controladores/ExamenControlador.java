@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/sura/examenes")
 public class ExamenControlador {
@@ -44,6 +46,18 @@ public class ExamenControlador {
         }
     }
 
-
+    @GetMapping
+    public ResponseEntity<List<Examen>> consultarExamenes(){
+        try {
+            List<Examen>listaConsultada=this.examenServicio.buscarTodosLosExamenes();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(listaConsultada);
+        }catch (Exception error){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
+    }
 
 }

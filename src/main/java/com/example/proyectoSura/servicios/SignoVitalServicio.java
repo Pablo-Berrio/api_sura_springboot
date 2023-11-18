@@ -1,11 +1,13 @@
 package com.example.proyectoSura.servicios;
 
+import com.example.proyectoSura.entidades.Afiliado;
 import com.example.proyectoSura.entidades.SignoVital;
 import com.example.proyectoSura.repositorios.SignoVitalRepositorio;
 import com.example.proyectoSura.utilidades.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class SignoVitalServicio {
@@ -33,6 +35,16 @@ public class SignoVitalServicio {
             }
         }catch (Exception error){
             throw new Exception(Enum.ERROR_EN_CONSULTA.getMensaje());
+        }
+    }
+
+    //CONSULTAR SIGNOS VITALES
+    public List<SignoVital> buscarTodosLosSignosVitales()throws Exception{
+        try {
+            List<SignoVital>listaConsultada= this.signoVitalRepositorio.findAll();
+            return listaConsultada;
+        }catch (Exception error){
+            throw new Exception(Enum.EXAMEN_INEXISTENTE.getMensaje());
         }
     }
 

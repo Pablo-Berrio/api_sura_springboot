@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/sura/afiliados")
 public class AfiliadoControlador {
@@ -44,6 +46,33 @@ public class AfiliadoControlador {
         }
     }
 
+    //CONSULTAR AFILIADO
+    @GetMapping
+    public ResponseEntity<List<Afiliado>> consultarAfiliados(){
+        try {
+            List<Afiliado>listaConsultada=this.afiliadoServicio.buscarTodosLosAfiliados();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(listaConsultada);
+        }catch (Exception error){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Afiliado> editarAfiliado(@PathVariable Integer id, @RequestBody Afiliado afiliado){
+        try {
+            Afiliado afiliadoRespuesta=this.afiliadoServicio.editarAfiliado(id, afiliado);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(afiliadoRespuesta);
+        }catch (Exception error){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
+    }
 
 }
