@@ -49,6 +49,36 @@ public class ExamenServicio {
     }
 
     //MODIFICAR
+    public Examen editarExamen(Integer id, Examen examen)throws Exception{
+        try {
+            Optional<Examen>examenBuscado=this.examenRepositorio.findById(id);
+            if (examenBuscado.isPresent()){
+                Examen examenExistente=examenBuscado.get();
+                examenExistente.setNombreExamen(examen.getNombreExamen());
+                examenExistente.setImagenExamen(examen.getImagenExamen());
+                Examen examenModificado= this.examenRepositorio.save(examenExistente);
+                return examenModificado;
+            }else {
+                throw new Exception("id inexistente");
+            }
+        }catch (Exception error){
+            throw new Exception("no pudimos editar el examen");
+        }
+    }
+
     //BORRAR
+    public Boolean retirarExamen(Integer id)throws Exception{
+        try {
+            Boolean examenEncontrado=this.examenRepositorio.existsById(id);
+            if (examenEncontrado){
+                this.examenRepositorio.deleteById(id);
+                return true;
+            }else {
+                throw new Exception("examen no encontrado");
+            }
+        }catch (Exception error){
+            throw new Exception("error al eliminar el examen");
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.example.proyectoSura.servicios;
 
 import com.example.proyectoSura.entidades.Afiliado;
+import com.example.proyectoSura.entidades.Examen;
 import com.example.proyectoSura.entidades.SignoVital;
 import com.example.proyectoSura.repositorios.SignoVitalRepositorio;
 import com.example.proyectoSura.utilidades.Enum;
@@ -49,6 +50,35 @@ public class SignoVitalServicio {
     }
 
     //MODIFICAR
+    public SignoVital editarSignoVital(Integer id, SignoVital signoVital)throws Exception{
+        try {
+            Optional<SignoVital>signoVitalBuscado=this.signoVitalRepositorio.findById(id);
+            if (signoVitalBuscado.isPresent()){
+                SignoVital signoVitalExistente=signoVitalBuscado.get();
+                signoVitalExistente.setUnidadMedida(signoVital.getUnidadMedida());
+                SignoVital signoVitalModificado= this.signoVitalRepositorio.save(signoVitalExistente);
+                return signoVitalModificado;
+            }else {
+                throw new Exception("id inexistente");
+            }
+        }catch (Exception error){
+            throw new Exception("no pudimos editar el signo vital");
+        }
+    }
+
     //BORRAR
+    public Boolean retirarSignoVital(Integer id)throws Exception{
+        try {
+            Boolean signoVitalEncontrado=this.signoVitalRepositorio.existsById(id);
+            if (signoVitalEncontrado){
+                this.signoVitalRepositorio.deleteById(id);
+                return true;
+            }else {
+                throw new Exception("signo vital no encontrado");
+            }
+        }catch (Exception error){
+            throw new Exception("error al eliminar el signo vital");
+        }
+    }
 
 }
